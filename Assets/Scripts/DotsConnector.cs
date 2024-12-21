@@ -1,13 +1,16 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DotsManager : MonoBehaviour
+public class DotsConnector : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _dotLayerMask;
     [SerializeField] private LineRenderer _lineRenderer;
 
     private List<Dot> _selectedDots;
+
+    public event Action<Dot[]> DotsConnected;
 
     private void Awake()
     {
@@ -36,6 +39,11 @@ public class DotsManager : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
+            if (_selectedDots.Count >= 3)
+            {
+                DotsConnected?.Invoke(_selectedDots.ToArray());
+            }
+
             _selectedDots.Clear();
             _lineRenderer.positionCount = 0;
         }

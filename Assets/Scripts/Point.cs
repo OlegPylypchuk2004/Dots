@@ -10,6 +10,7 @@ public class Point : MonoBehaviour
     public Point DownPoint { get; private set; }
     public Point RightPoint { get; private set; }
     public Point LeftPoint { get; private set; }
+    public Dot Dot { get; set; }
 
     public void FindNeighboring()
     {

@@ -8,6 +8,7 @@ public class Field : MonoBehaviour
     [SerializeField] private int _width;
     [SerializeField] private int _height;
     [SerializeField] private float _spacing;
+    [SerializeField] private DotsConnector _connector;
 
     private DotData _dotData;
     private List<Point> _points;
@@ -22,6 +23,16 @@ public class Field : MonoBehaviour
         _dotData = Resources.Load<DotData>("Data/DotData");
 
         Generate();
+    }
+
+    private void OnEnable()
+    {
+        _connector.DotsConnected += OnDotsConnected;
+    }
+
+    private void OnDisable()
+    {
+        _connector.DotsConnected -= OnDotsConnected;
     }
 
     private void Generate()
@@ -43,7 +54,10 @@ public class Field : MonoBehaviour
 
             Dot dot = SpawnDot();
             dot.transform.SetParent(_points[i].transform, false);
-            dot.Initialize(_points[i], _dotData.Colors[Random.Range(0, _dotData.Colors.Length)]);
+            dot.Point = _points[i];
+            dot.Color = _dotData.Colors[Random.Range(0, _dotData.Colors.Length)];
+
+            _points[i].Dot = dot;
         }
     }
 
@@ -55,5 +69,36 @@ public class Field : MonoBehaviour
     private Dot SpawnDot()
     {
         return Instantiate(_dotPrefab);
+    }
+
+    private void OnDotsConnected(Dot[] dots)
+    {
+        List<Point> points = new List<Point>();
+
+        foreach (Dot dot in dots)
+        {
+            points.Add(dot.Point);
+            Destroy(dot.gameObject);
+        }
+
+        foreach (Point point in points)
+        {
+            point.Dot = null;
+        }
+
+        foreach (Point point in _points)
+        {
+            if (point.Dot == null)
+            {
+                if (point.UpPoint != null && point.UpPoint.Dot != null)
+                {
+                    point.Dot = point.UpPoint.Dot;
+                    point.Dot.Point = point;
+                    point.Dot.transform.SetParent(point.transform, false);
+
+                    point.UpPoint.Dot = null;
+                }
+            }
+        }
     }
 }

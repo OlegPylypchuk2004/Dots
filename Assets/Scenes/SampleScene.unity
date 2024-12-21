@@ -263,6 +263,7 @@ MonoBehaviour:
   _width: 5
   _height: 5
   _spacing: 2
+  _connector: {fileID: 1801191448}
 --- !u!1 &1801191446
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +276,7 @@ GameObject:
   - component: {fileID: 1801191449}
   - component: {fileID: 1801191448}
   m_Layer: 0
-  m_Name: DotsManager
+  m_Name: Connector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
