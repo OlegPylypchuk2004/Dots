@@ -26,14 +26,25 @@ public class DotsConnector : MonoBehaviour
 
             if (hitInfo.collider != null && hitInfo.collider.TryGetComponent(out Dot dot))
             {
-                if (_selectedDots.Count == 0 || IsCanConnect(dot, _selectedDots[_selectedDots.Count - 1]))
+                if (_selectedDots.Count == 0)
                 {
-                    _selectedDots.Add(dot);
-                    _lineRenderer.positionCount = _selectedDots.Count;
-                    _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _selectedDots[_selectedDots.Count - 1].transform.position);
+                    Select(dot);
+                }
+                else if (IsCanConnect(dot, _selectedDots[_selectedDots.Count - 1]))
+                {
+                    if (_selectedDots.Contains(dot))
+                    {
+                        if (_selectedDots[_selectedDots.Count - 2] == dot)
+                        {
+                            _selectedDots.RemoveAt(_selectedDots.Count - 1);
 
-                    _lineRenderer.startColor = dot.Color;
-                    _lineRenderer.endColor = dot.Color;
+                            UpdateLine();
+                        }
+                    }
+                    else
+                    {
+                        Select(dot);
+                    }
                 }
             }
         }
@@ -49,6 +60,25 @@ public class DotsConnector : MonoBehaviour
         }
     }
 
+    private void Select(Dot dot)
+    {
+        _selectedDots.Add(dot);
+
+        UpdateLine();
+    }
+
+    private void UpdateLine()
+    {
+        if (_selectedDots.Count > 0)
+        {
+            _lineRenderer.startColor = _selectedDots[0].Color;
+            _lineRenderer.endColor = _selectedDots[0].Color;
+        }
+
+        _lineRenderer.positionCount = _selectedDots.Count;
+        _lineRenderer.SetPosition(_lineRenderer.positionCount - 1, _selectedDots[_selectedDots.Count - 1].transform.position);
+    }
+
     private Vector2 MouseWorldPosition()
     {
         return _camera.ScreenToWorldPoint(Input.mousePosition);
@@ -56,7 +86,7 @@ public class DotsConnector : MonoBehaviour
 
     private bool IsCanConnect(Dot firstDot, Dot secondDot)
     {
-        return !_selectedDots.Contains(firstDot) && IsPointsNeighboring(firstDot.Point, secondDot.Point) && firstDot.Color == secondDot.Color;
+        return IsPointsNeighboring(firstDot.Point, secondDot.Point) && firstDot.Color == secondDot.Color;
     }
 
     private bool IsPointsNeighboring(Point firstPoint, Point secondPoint)
