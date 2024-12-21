@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -86,11 +87,11 @@ public class Field : MonoBehaviour
             point.Dot = null;
         }
 
-        bool 連Moved;
+        bool isMoved;
 
         do
         {
-            連Moved = false;
+            isMoved = false;
 
             foreach (Point point in _points)
             {
@@ -98,16 +99,20 @@ public class Field : MonoBehaviour
                 {
                     if (point.UpPoint != null && point.UpPoint.Dot != null)
                     {
-                        point.Dot = point.UpPoint.Dot;
-                        point.Dot.Point = point;
-                        point.Dot.transform.SetParent(point.transform, false);
+                        Dot movingDot = point.UpPoint.Dot;
+                        point.Dot = movingDot;
+                        movingDot.Point = point;
+
+                        movingDot.transform.SetParent(point.transform);
+
+                        movingDot.MoveTo(point.transform.position);
 
                         point.UpPoint.Dot = null;
-                        連Moved = true;
+                        isMoved = true;
                     }
                 }
             }
         }
-        while (連Moved);
+        while (isMoved);
     }
 }
