@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Field : MonoBehaviour
@@ -89,6 +90,8 @@ public class Field : MonoBehaviour
 
         bool isMoved;
 
+        Sequence dotsMoveSequence = DOTween.Sequence();
+
         do
         {
             isMoved = false;
@@ -105,7 +108,8 @@ public class Field : MonoBehaviour
 
                         movingDot.transform.SetParent(point.transform);
 
-                        movingDot.MoveTo(point.transform.position);
+                        dotsMoveSequence.Join
+                            (movingDot.MoveTo(point.transform.position));
 
                         point.UpPoint.Dot = null;
                         isMoved = true;
@@ -114,5 +118,24 @@ public class Field : MonoBehaviour
             }
         }
         while (isMoved);
+
+        dotsMoveSequence.SetLink(gameObject);
+
+        dotsMoveSequence.OnKill(() =>
+        {
+            for (int i = 0; i < _points.Count; i++)
+            {
+                if (_points[i].Dot == null)
+                {
+                    Dot dot = SpawnDot();
+                    dot.transform.SetParent(_points[i].transform, false);
+                    dot.Point = _points[i];
+                    dot.Color = _dotData.Colors[Random.Range(0, _dotData.Colors.Length)];
+                    dot.Appear();
+
+                    _points[i].Dot = dot;
+                }
+            }
+        });
     }
 }

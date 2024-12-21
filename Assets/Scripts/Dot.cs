@@ -20,6 +20,20 @@ public class Dot : MonoBehaviour
         }
     }
 
+    public Tween Appear()
+    {
+        _collider.enabled = false;
+
+        return _spriteRenderer.transform.DOScale(1f, 0.25f)
+            .From(0f)
+            .SetEase(Ease.OutQuad)
+            .SetLink(gameObject)
+            .OnKill(() =>
+            {
+                _collider.enabled = true;
+            });
+    }
+
     public Tween MoveTo(Vector2 position)
     {
         _collider.enabled = false;
