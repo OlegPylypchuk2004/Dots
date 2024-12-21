@@ -20,7 +20,7 @@ public class DotsManager : MonoBehaviour
         {
             Vector2 mouseWorldPosition = MouseWorldPosition();
             RaycastHit2D hitInfo = Physics2D.Raycast(mouseWorldPosition, Vector2.zero, 1f, _dotLayerMask);
-            
+
             if (hitInfo.collider != null && hitInfo.collider.TryGetComponent(out Dot dot))
             {
                 if (_selectedDots.Count == 0 || IsCanConnect(dot, _selectedDots[_selectedDots.Count - 1]))
@@ -48,6 +48,28 @@ public class DotsManager : MonoBehaviour
 
     private bool IsCanConnect(Dot firstDot, Dot secondDot)
     {
-        return !_selectedDots.Contains(firstDot) && firstDot.Color == secondDot.Color;
+        return !_selectedDots.Contains(firstDot) && IsPointsNeighboring(firstDot.Point, secondDot.Point) && firstDot.Color == secondDot.Color;
+    }
+
+    private bool IsPointsNeighboring(Point firstPoint, Point secondPoint)
+    {
+        if (firstPoint.UpPoint == secondPoint)
+        {
+            return true;
+        }
+        else if (firstPoint.DownPoint == secondPoint)
+        {
+            return true;
+        }
+        else if (firstPoint.RightPoint == secondPoint)
+        {
+            return true;
+        }
+        else if (firstPoint.LeftPoint == secondPoint)
+        {
+            return true;
+        }
+
+        return false;
     }
 }

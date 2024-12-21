@@ -39,9 +39,11 @@ public class Field : MonoBehaviour
 
         for (int i = 0; i < _points.Count; i++)
         {
+            _points[i].FindNeighboring();
+
             Dot dot = SpawnDot();
             dot.transform.SetParent(_points[i].transform, false);
-            dot.Initialize(_dotData.Colors[Random.Range(0, _dotData.Colors.Length)]);
+            dot.Initialize(_points[i], _dotData.Colors[Random.Range(0, _dotData.Colors.Length)]);
         }
     }
 
