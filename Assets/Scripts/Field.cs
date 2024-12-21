@@ -86,19 +86,28 @@ public class Field : MonoBehaviour
             point.Dot = null;
         }
 
-        foreach (Point point in _points)
-        {
-            if (point.Dot == null)
-            {
-                if (point.UpPoint != null && point.UpPoint.Dot != null)
-                {
-                    point.Dot = point.UpPoint.Dot;
-                    point.Dot.Point = point;
-                    point.Dot.transform.SetParent(point.transform, false);
+        bool 連Moved;
 
-                    point.UpPoint.Dot = null;
+        do
+        {
+            連Moved = false;
+
+            foreach (Point point in _points)
+            {
+                if (point.Dot == null)
+                {
+                    if (point.UpPoint != null && point.UpPoint.Dot != null)
+                    {
+                        point.Dot = point.UpPoint.Dot;
+                        point.Dot.Point = point;
+                        point.Dot.transform.SetParent(point.transform, false);
+
+                        point.UpPoint.Dot = null;
+                        連Moved = true;
+                    }
                 }
             }
         }
+        while (連Moved);
     }
 }
