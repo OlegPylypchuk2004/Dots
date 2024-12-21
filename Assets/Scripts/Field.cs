@@ -7,8 +7,12 @@ public class Field : MonoBehaviour
     [SerializeField] private int _height;
     [SerializeField] private float _spacing;
 
+    private DotData _dotData;
+
     private void Start()
     {
+        _dotData = Resources.Load<DotData>("Data/DotData");
+
         Generate();
     }
 
@@ -20,10 +24,14 @@ public class Field : MonoBehaviour
         {
             for (int x = 0; x < _width; x++)
             {
-                Vector2 spawnPosition = startPosition + new Vector2(x * _spacing, y * _spacing);
-
-                Instantiate(_dotPrefab, spawnPosition, Quaternion.identity, transform);
+                Dot dot = SpawnDot(startPosition + new Vector2(x * _spacing, y * _spacing));
+                dot.Initialize(_dotData.Colors[Random.Range(0, _dotData.Colors.Length)]);
             }
         }
+    }
+
+    private Dot SpawnDot(Vector2 position)
+    {
+        return Instantiate(_dotPrefab, position, Quaternion.identity, transform);
     }
 }
