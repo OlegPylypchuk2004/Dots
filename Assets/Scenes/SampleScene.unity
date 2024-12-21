@@ -258,6 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df7544aef2c57ce4992e689d92f33b31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _pointPrefab: {fileID: 2468676438322672413, guid: 3832ce3f16d8e44429d01bd22414893f, type: 3}
   _dotPrefab: {fileID: 6793619893184336870, guid: 2037e3a41e3b9ac48833f6b520dadd20, type: 3}
   _width: 5
   _height: 5
