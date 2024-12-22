@@ -17,7 +17,7 @@ public class PanelFade : MonoBehaviour
 
     public Tween Disappear()
     {
-        return _image.DOFade(0.9f, 0.25f)
+        return _image.DOFade(0f, 0.25f)
             .SetEase(Ease.InQuad)
             .SetLink(gameObject)
             .OnComplete(() =>
