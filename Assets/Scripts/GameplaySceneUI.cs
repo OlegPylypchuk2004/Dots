@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class GameplaySceneUI : MonoBehaviour
 {
+    [SerializeField] private SceneChanger _sceneChanger;
     [SerializeField] private Button _restartButton;
 
     private void OnEnable()
@@ -17,6 +18,6 @@ public class GameplaySceneUI : MonoBehaviour
 
     private void OnRestartButtonClicked()
     {
-
+        _sceneChanger.LoadCurrent();
     }
 }

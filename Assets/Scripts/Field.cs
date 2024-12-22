@@ -17,13 +17,7 @@ public class Field : MonoBehaviour
     private void Awake()
     {
         _points = new List<Point>();
-    }
-
-    private void Start()
-    {
         _dotData = Resources.Load<DotData>("Data/DotData");
-
-        Generate();
     }
 
     private void OnEnable()
@@ -36,7 +30,7 @@ public class Field : MonoBehaviour
         _connector.DotsConnected -= OnDotsConnected;
     }
 
-    private void Generate()
+    public void Generate()
     {
         Vector2 startPosition = new Vector2(-((_gridData.Width - 1) * _spacing) / 2, -((_gridData.Height - 1) * _spacing) / 2);
 
