@@ -5,6 +5,7 @@ public class Dot : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _spriteRenderer;
     [SerializeField] private Collider2D _collider;
+    [SerializeField] private SpriteRenderer _animationSpriteRenderer;
 
     public Point Point { get; set; }
 
@@ -17,6 +18,11 @@ public class Dot : MonoBehaviour
         set
         {
             _spriteRenderer.color = value;
+
+            Color targetColor = value;
+            targetColor.a = .5f;
+
+            _animationSpriteRenderer.color = targetColor;
         }
     }
 
@@ -45,5 +51,19 @@ public class Dot : MonoBehaviour
             {
                 _collider.enabled = true;
             });
+    }
+
+    public Tween Select()
+    {
+        return _animationSpriteRenderer.transform.DOScale(1.5f, 0.25f)
+            .SetEase(Ease.OutQuad)
+            .SetLink(gameObject);
+    }
+
+    public Tween Deselect()
+    {
+        return _animationSpriteRenderer.transform.DOScale(0f, 0.25f)
+            .SetEase(Ease.InQuad)
+            .SetLink(gameObject);
     }
 }

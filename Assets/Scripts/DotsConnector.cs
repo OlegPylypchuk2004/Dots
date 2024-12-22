@@ -36,6 +36,7 @@ public class DotsConnector : MonoBehaviour
                     {
                         if (_selectedDots[_selectedDots.Count - 2] == dot)
                         {
+                            _selectedDots[_selectedDots.Count - 1].Deselect();
                             _selectedDots.RemoveAt(_selectedDots.Count - 1);
 
                             UpdateLine();
@@ -63,6 +64,7 @@ public class DotsConnector : MonoBehaviour
     private void Select(Dot dot)
     {
         _selectedDots.Add(dot);
+        dot.Select();
 
         UpdateLine();
     }
