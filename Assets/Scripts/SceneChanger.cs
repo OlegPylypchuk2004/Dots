@@ -113,12 +113,12 @@ public class SceneChanger : MonoBehaviour
         Sequence disappearSequence = DOTween.Sequence();
 
         disappearSequence.Join
-            (_circleRectTransform.DOSizeDelta(new Vector2(_maxCircleSize, _maxCircleSize), 5f)
+            (_circleRectTransform.DOSizeDelta(new Vector2(_maxCircleSize, _maxCircleSize), 0.5f)
             .From(Vector2.zero)
             .SetEase(Ease.OutQuad));
 
         disappearSequence.Join
-            (_fadeImage.DOFade(0f, 5f)
+            (_fadeImage.DOFade(0f, 0.5f)
             .From(1f)
             .SetEase(Ease.OutQuad));
 

@@ -4,14 +4,29 @@ using UnityEngine.UI;
 
 public class ReverseMaskUI : Image
 {
+    private Material _cachedMaterial;
+
     public override Material materialForRendering
     {
         get
         {
-            Material material = new Material(base.materialForRendering);
-            material.SetInt("_StencilComp", (int)CompareFunction.NotEqual);
+            if (_cachedMaterial == null)
+            {
+                _cachedMaterial = new Material(base.materialForRendering);
+                _cachedMaterial.SetInt("_StencilComp", (int)CompareFunction.NotEqual);
+            }
 
-            return material;
+            return _cachedMaterial;
         }
+    }
+
+    protected override void OnDestroy()
+    {
+        if (_cachedMaterial != null)
+        {
+            Destroy(_cachedMaterial);
+        }
+
+        base.OnDestroy();
     }
 }
