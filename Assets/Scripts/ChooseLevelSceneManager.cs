@@ -6,11 +6,13 @@ public class ChooseLevelSceneManager : MonoBehaviour
     [SerializeField] private LevelButton _levelButtonPrefab;
     [SerializeField] private Transform _levelButtonsParent;
 
+    private LevelData[] _levelDatas;
     private LevelButton[] _levelButtons;
 
     private void Start()
     {
-        _levelButtons = new LevelButton[10];
+        _levelDatas = Resources.LoadAll<LevelData>("Data/Levels");
+        _levelButtons = new LevelButton[_levelDatas.Length];
 
         for (int i = 0; i < _levelButtons.Length; i++)
         {
@@ -38,6 +40,8 @@ public class ChooseLevelSceneManager : MonoBehaviour
         {
             _levelButtons[i].Clicked -= OnLevelButtonClicked;
         }
+
+        ChosenLevel.Data = _levelDatas[levelNumber - 1];
 
         _sceneChanger.LoadByName("LevelScene");
     }

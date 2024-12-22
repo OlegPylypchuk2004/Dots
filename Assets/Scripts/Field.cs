@@ -1,13 +1,11 @@
 using DG.Tweening;
 using System.Collections.Generic;
-using System.Drawing;
 using UnityEngine;
 
 public class Field : MonoBehaviour
 {
     [SerializeField] private Point _pointPrefab;
     [SerializeField] private Dot _dotPrefab;
-    [SerializeField] private GridData _gridData;
     [SerializeField] private float _spacing;
     [SerializeField] private DotsConnector _connector;
 
@@ -30,17 +28,17 @@ public class Field : MonoBehaviour
         _connector.DotsConnected -= OnDotsConnected;
     }
 
-    public void Generate()
+    public void Generate(GridData gridData)
     {
-        Vector2 startPosition = new Vector2(-((_gridData.Width - 1) * _spacing) / 2, -((_gridData.Height - 1) * _spacing) / 2);
+        Vector2 startPosition = new Vector2(-((gridData.Width - 1) * _spacing) / 2, -((gridData.Height - 1) * _spacing) / 2);
 
-        for (int y = 0; y < _gridData.Height; y++)
+        for (int y = 0; y < gridData.Height; y++)
         {
-            for (int x = 0; x < _gridData.Width; x++)
+            for (int x = 0; x < gridData.Width; x++)
             {
-                int index = y * _gridData.Width + x;
+                int index = y * gridData.Width + x;
 
-                if (_gridData.Values[index])
+                if (gridData.Values[index])
                 {
                     Vector2 spawnPosition = startPosition + new Vector2(x * _spacing, y * _spacing);
                     Point point = SpawnPoint(spawnPosition);
