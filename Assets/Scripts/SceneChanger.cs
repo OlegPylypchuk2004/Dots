@@ -22,7 +22,7 @@ public class SceneChanger : MonoBehaviour
         _circleRectTransform.sizeDelta = Vector2.zero;
         _backgroundRectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
         _fadeRectTransform.sizeDelta = new Vector2(Screen.width, Screen.height);
-        _maxCircleSize = Mathf.Max(Screen.width, Screen.height) * 1.5f;
+        _maxCircleSize = Mathf.Max(Screen.width, Screen.height) * 1.25f;
     }
 
     public void LoadByName(string sceneName)
