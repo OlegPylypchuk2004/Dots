@@ -3,21 +3,21 @@ using UnityEngine.UI;
 
 public class GameplaySceneUI : MonoBehaviour
 {
-    [SerializeField] private SceneChanger _sceneChanger;
-    [SerializeField] private Button _restartButton;
+    [SerializeField] private Button _pauseButton;
+    [SerializeField] private Panel _pausePanel;
 
     private void OnEnable()
     {
-        _restartButton.onClick.AddListener(OnRestartButtonClicked);
+        _pauseButton.onClick.AddListener(OnPauseButtonClicked);
     }
 
     private void OnDisable()
     {
-        _restartButton.onClick.RemoveListener(OnRestartButtonClicked);
+        _pauseButton.onClick.RemoveListener(OnPauseButtonClicked);
     }
 
-    private void OnRestartButtonClicked()
+    private void OnPauseButtonClicked()
     {
-        _sceneChanger.LoadCurrent();
+        _pausePanel.Appear();
     }
 }
