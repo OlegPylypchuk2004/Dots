@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class DotsConnector : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class DotsConnector : MonoBehaviour
     [SerializeField] private LineRenderer _lineRenderer;
 
     private List<Dot> _selectedDots;
+    private bool _isActivated;
 
     public event Action<Dot[]> DotsConnected;
 
@@ -19,6 +21,11 @@ public class DotsConnector : MonoBehaviour
 
     private void Update()
     {
+        if (!_isActivated || IsTouchOverUI())
+        {
+            return;
+        }
+
         if (Input.GetMouseButton(0))
         {
             Vector2 mouseWorldPosition = MouseWorldPosition();
@@ -49,7 +56,7 @@ public class DotsConnector : MonoBehaviour
                 }
             }
         }
-        else if (Input.GetMouseButtonUp(0))
+        else
         {
             if (_selectedDots.Count >= 2)
             {
@@ -64,6 +71,37 @@ public class DotsConnector : MonoBehaviour
             _selectedDots.Clear();
             _lineRenderer.positionCount = 0;
         }
+    }
+
+    public void Activate()
+    {
+        _isActivated = true;
+    }
+
+    public void Deactivate()
+    {
+        _isActivated = false;
+    }
+
+    private bool IsTouchOverUI()
+    {
+        if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject())
+        {
+            return true;
+        }
+
+        if (Input.touchCount > 0)
+        {
+            foreach (Touch touch in Input.touches)
+            {
+                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 
     private void Select(Dot dot)

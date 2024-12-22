@@ -3,6 +3,7 @@ using UnityEngine.UI;
 
 public class GameplaySceneUI : MonoBehaviour
 {
+    [SerializeField] private GameplayManager _gameplayManager;
     [SerializeField] private Button _pauseButton;
     [SerializeField] private Panel _pausePanel;
 
@@ -18,6 +19,7 @@ public class GameplaySceneUI : MonoBehaviour
 
     private void OnPauseButtonClicked()
     {
+        _gameplayManager.SetPause(true);
         _pausePanel.Appear();
     }
 }

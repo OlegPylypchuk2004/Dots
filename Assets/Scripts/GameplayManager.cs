@@ -19,6 +19,7 @@ public class GameplayManager : MonoBehaviour
 
         _field.Generate(_levelData.GridData);
         _connecter.DotsConnected += OnDotsConnected;
+        _connecter.Activate();
 
         _sceneChanger.PlayDisappearAnimation();
     }
@@ -26,6 +27,20 @@ public class GameplayManager : MonoBehaviour
     private void OnDisable()
     {
         _connecter.DotsConnected -= OnDotsConnected;
+    }
+
+    public void SetPause(bool isPause)
+    {
+        if (isPause)
+        {
+            Time.timeScale = 0f;
+            _connecter.Deactivate();
+        }
+        else
+        {
+            Time.timeScale = 1f;
+            _connecter.Activate();
+        }
     }
 
     private void OnDotsConnected(Dot[] dots)
