@@ -51,9 +51,14 @@ public class DotsConnector : MonoBehaviour
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            if (_selectedDots.Count >= 3)
+            if (_selectedDots.Count >= 2)
             {
                 DotsConnected?.Invoke(_selectedDots.ToArray());
+            }
+
+            foreach (Dot selectedDot in _selectedDots)
+            {
+                selectedDot.Deselect();
             }
 
             _selectedDots.Clear();
