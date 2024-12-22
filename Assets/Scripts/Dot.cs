@@ -29,6 +29,7 @@ public class Dot : MonoBehaviour
     public Tween Appear()
     {
         _collider.enabled = false;
+        _animationSpriteRenderer.gameObject.SetActive(false);
 
         return _spriteRenderer.transform.DOScale(1f, 0.25f)
             .From(0f)
@@ -37,6 +38,7 @@ public class Dot : MonoBehaviour
             .OnKill(() =>
             {
                 _collider.enabled = true;
+                _animationSpriteRenderer.gameObject.SetActive(true);
             });
     }
 
@@ -55,14 +57,14 @@ public class Dot : MonoBehaviour
 
     public Tween Select()
     {
-        return _animationSpriteRenderer.transform.DOScale(1.5f, 0.25f)
+        return _animationSpriteRenderer.transform.DOScale(1.5f, 0.125f)
             .SetEase(Ease.OutQuad)
             .SetLink(gameObject);
     }
 
     public Tween Deselect()
     {
-        return _animationSpriteRenderer.transform.DOScale(0f, 0.25f)
+        return _animationSpriteRenderer.transform.DOScale(1f, 0.125f)
             .SetEase(Ease.InQuad)
             .SetLink(gameObject);
     }
