@@ -4,4 +4,5 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     [field: SerializeField] public GridData GridData { get; private set; }
+    [field: SerializeField] public int MovesCount { get; private set; }
 }

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: level_3
   m_EditorClassIdentifier: 
   <GridData>k__BackingField: {fileID: 11400000, guid: 72a5248e6625dc84f9aa03673a22e238, type: 2}
+  <MovesCount>k__BackingField: 15
