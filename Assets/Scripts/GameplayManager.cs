@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
@@ -6,6 +7,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private SceneChanger _sceneChanger;
     [SerializeField] private Field _field;
     [SerializeField] private DotsConnector _connecter;
+    [SerializeField] private GameplaySceneUI _ui;
+    [SerializeField] private EndPanel _endPanel;
 
     private LevelData _levelData;
     private int _movesCount;
@@ -48,5 +51,24 @@ public class GameplayManager : MonoBehaviour
         _movesCount--;
 
         MovesCountChanged?.Invoke(_movesCount);
+
+        if (_movesCount <= 0)
+        {
+            //  if not losed
+
+            _movesCount = 0;
+            _connecter.Deactivate();
+            _ui.Lock();
+            _endPanel.UpdateView(false);
+
+            StartCoroutine(ShowEndPanel());
+        }
+    }
+
+    private IEnumerator ShowEndPanel()
+    {
+        yield return new WaitForSeconds(0.75f);
+
+        _endPanel.Appear();
     }
 }

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class GameplaySceneUI : MonoBehaviour
 {
     [SerializeField] private GameplayManager _gameplayManager;
+    [SerializeField] private CanvasGroup _mainCanvasGroup;
     [SerializeField] private Button _pauseButton;
     [SerializeField] private Panel _pausePanel;
 
@@ -15,6 +16,11 @@ public class GameplaySceneUI : MonoBehaviour
     private void OnDisable()
     {
         _pauseButton.onClick.RemoveListener(OnPauseButtonClicked);
+    }
+
+    public void Lock()
+    {
+        _mainCanvasGroup.interactable = false;
     }
 
     private void OnPauseButtonClicked()
