@@ -20,6 +20,8 @@ public class GameplayManager : MonoBehaviour
         _levelData = ChosenLevel.Data;
         _movesCount = _levelData.MovesCount;
 
+        MovesCountChanged?.Invoke(_movesCount);
+
         _field.Generate(_levelData.GridData);
         _connecter.DotsConnected += OnDotsConnected;
         _connecter.Activate();
@@ -67,7 +69,7 @@ public class GameplayManager : MonoBehaviour
 
     private IEnumerator ShowEndPanel()
     {
-        yield return new WaitForSeconds(0.75f);
+        yield return new WaitForSeconds(0.5f);
 
         _endPanel.Appear();
     }
