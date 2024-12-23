@@ -12,6 +12,7 @@ public class GameplayManager : MonoBehaviour
 
     private LevelData _levelData;
     private int _movesCount;
+    private TargetDotData[] _targetDotDatas;
 
     public event Action<int> MovesCountChanged;
 
@@ -19,12 +20,15 @@ public class GameplayManager : MonoBehaviour
     {
         _levelData = ChosenLevel.Data;
         _movesCount = _levelData.MovesCount;
+        _targetDotDatas = _levelData.TargetDotDatas;
 
         MovesCountChanged?.Invoke(_movesCount);
 
         _field.Generate(_levelData.GridData);
         _connecter.DotsConnected += OnDotsConnected;
         _connecter.Activate();
+
+        _ui.SpawnTargetDotViews(_targetDotDatas);
 
         _sceneChanger.PlayDisappearAnimation();
     }
