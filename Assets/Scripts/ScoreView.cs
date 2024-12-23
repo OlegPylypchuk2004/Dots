@@ -1,3 +1,4 @@
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 
@@ -7,6 +8,7 @@ public class ScoreView : MonoBehaviour
 
     private ScoreCounter _scoreCounter;
     private bool _isInitialized;
+    private int _currentValue;
 
     private void OnDestroy()
     {
@@ -26,6 +28,17 @@ public class ScoreView : MonoBehaviour
 
     private void OnValueChanged(int value)
     {
-        _textMesh.text = $"{value:D9}";
+        DOTween.Kill(_currentValue);
+
+        DOTween.To(() => _currentValue, x => _currentValue = x, value, 0.25f)
+            .SetEase(Ease.Linear)
+            .OnUpdate(() =>
+            {
+                _textMesh.text = $"{_currentValue:D9}";
+            })
+            .OnKill(() =>
+            {
+                _currentValue = value;
+            });
     }
 }
