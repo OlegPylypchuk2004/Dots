@@ -79,17 +79,39 @@ public class GameplayManager : MonoBehaviour
 
         _ui.UpdateTargetDotViews(_targetDotDatas);
 
-        if (_movesCount <= 0)
+        if (IsLevelCompleted())
         {
-            //  if not losed
-
-            _movesCount = 0;
             _connecter.Deactivate();
             _ui.Lock();
-            _endPanel.UpdateView(false);
+            _endPanel.UpdateView(true);
 
             StartCoroutine(ShowEndPanel());
         }
+        else
+        {
+            if (_movesCount <= 0)
+            {
+                _movesCount = 0;
+                _connecter.Deactivate();
+                _ui.Lock();
+                _endPanel.UpdateView(false);
+
+                StartCoroutine(ShowEndPanel());
+            }
+        }
+    }
+
+    private bool IsLevelCompleted()
+    {
+        foreach (TargetDotData targetDotData in _targetDotDatas)
+        {
+            if (targetDotData.Count > 0)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private IEnumerator ShowEndPanel()
