@@ -116,8 +116,8 @@ public class DotsConnector : MonoBehaviour
     {
         if (_selectedDots.Count > 0)
         {
-            _lineRenderer.startColor = _selectedDots[0].Color;
-            _lineRenderer.endColor = _selectedDots[0].Color;
+            _lineRenderer.startColor = _selectedDots[0].Data.Color;
+            _lineRenderer.endColor = _selectedDots[0].Data.Color;
         }
 
         _lineRenderer.positionCount = _selectedDots.Count;
@@ -131,7 +131,7 @@ public class DotsConnector : MonoBehaviour
 
     private bool IsCanConnect(Dot firstDot, Dot secondDot)
     {
-        return IsPointsNeighboring(firstDot.Point, secondDot.Point) && firstDot.Color == secondDot.Color;
+        return IsPointsNeighboring(firstDot.Point, secondDot.Point) && firstDot.Data == secondDot.Data;
     }
 
     private bool IsPointsNeighboring(Point firstPoint, Point secondPoint)

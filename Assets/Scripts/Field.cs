@@ -9,13 +9,13 @@ public class Field : MonoBehaviour
     [SerializeField] private float _spacing;
     [SerializeField] private DotsConnector _connector;
 
-    private DotData _dotData;
+    private DotData[] _dotDatas;
     private List<Point> _points;
 
     private void Awake()
     {
         _points = new List<Point>();
-        _dotData = Resources.Load<DotData>("Data/DotData");
+        _dotDatas = Resources.LoadAll<DotData>("Data/Dots");
     }
 
     private void OnEnable()
@@ -54,7 +54,7 @@ public class Field : MonoBehaviour
             Dot dot = SpawnDot();
             dot.transform.SetParent(_points[i].transform, false);
             dot.Point = _points[i];
-            dot.Color = _dotData.Colors[Random.Range(0, _dotData.Colors.Length)];
+            dot.Data = _dotDatas[Random.Range(0, _dotDatas.Length)];
 
             _points[i].Dot = dot;
         }
@@ -127,7 +127,7 @@ public class Field : MonoBehaviour
                     Dot dot = SpawnDot();
                     dot.transform.SetParent(_points[i].transform, false);
                     dot.Point = _points[i];
-                    dot.Color = _dotData.Colors[Random.Range(0, _dotData.Colors.Length)];
+                    dot.Data = _dotDatas[Random.Range(0, _dotDatas.Length)];
                     dot.Appear();
 
                     _points[i].Dot = dot;

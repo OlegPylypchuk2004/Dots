@@ -7,19 +7,23 @@ public class Dot : MonoBehaviour
     [SerializeField] private Collider2D _collider;
     [SerializeField] private SpriteRenderer _animationSpriteRenderer;
 
+    private DotData _data;
+
     public Point Point { get; set; }
 
-    public Color Color
+    public DotData Data
     {
         get
         {
-            return _spriteRenderer.color;
+            return _data;
         }
         set
         {
-            _spriteRenderer.color = value;
+            _data = value;
 
-            Color targetColor = value;
+            _spriteRenderer.color = value.Color;
+
+            Color targetColor = value.Color;
             targetColor.a = .5f;
 
             _animationSpriteRenderer.color = targetColor;
