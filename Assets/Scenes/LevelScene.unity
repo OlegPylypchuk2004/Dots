@@ -1048,6 +1048,7 @@ MonoBehaviour:
   _connecter: {fileID: 1801191448}
   _ui: {fileID: 886180554}
   _endPanel: {fileID: 216991162}
+  _scoreView: {fileID: 1542508811}
 --- !u!1 &663778220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1864,7 +1865,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0000000012
+  m_text: 000000000
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: b3050d826cce1eb46a8b90c0db829237, type: 2}
   m_sharedMaterial: {fileID: -4972952669329391838, guid: b3050d826cce1eb46a8b90c0db829237, type: 2}
@@ -2679,8 +2680,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1542508810}
+  - component: {fileID: 1542508811}
   m_Layer: 0
-  m_Name: Score
+  m_Name: ScoreView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2706,6 +2708,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1542508811
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1542508809}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33a281b1251782e4497abd67b297a6cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _textMesh: {fileID: 1132697268}
 --- !u!1 &1578109438
 GameObject:
   m_ObjectHideFlags: 0

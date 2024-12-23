@@ -10,10 +10,12 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private DotsConnector _connecter;
     [SerializeField] private GameplaySceneUI _ui;
     [SerializeField] private EndPanel _endPanel;
+    [SerializeField] private ScoreView _scoreView;
 
     private LevelData _levelData;
     private int _movesCount;
     private TargetDotData[] _targetDotDatas;
+    private ScoreCounter _scoreCounter;
 
     public event Action<int> MovesCountChanged;
 
@@ -29,6 +31,9 @@ public class GameplayManager : MonoBehaviour
             _targetDotDatas[i].DotData = _levelData.TargetDotDatas[i].DotData;
             _targetDotDatas[i].Count = _levelData.TargetDotDatas[i].Count;
         }
+
+        _scoreCounter = new ScoreCounter();
+        _scoreView.Initialize(_scoreCounter);
 
         MovesCountChanged?.Invoke(_movesCount);
 
@@ -78,6 +83,8 @@ public class GameplayManager : MonoBehaviour
         }
 
         _ui.UpdateTargetDotViews(_targetDotDatas);
+
+        _scoreCounter.Increase(dots.Length);
 
         if (IsLevelCompleted())
         {
