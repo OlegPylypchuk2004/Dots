@@ -39,6 +39,14 @@ public class GameplaySceneUI : MonoBehaviour
         }
     }
 
+    public void UpdateTargetDotViews(TargetDotData[] targetDotDatas)
+    {
+        for (int i = 0; i < targetDotDatas.Length; i++)
+        {
+            _targetDotViews[i].UpdateView(targetDotDatas[i].Count);
+        }
+    }
+
     public void Lock()
     {
         _mainCanvasGroup.interactable = false;

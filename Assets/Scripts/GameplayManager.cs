@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class GameplayManager : MonoBehaviour
@@ -20,7 +21,14 @@ public class GameplayManager : MonoBehaviour
     {
         _levelData = ChosenLevel.Data;
         _movesCount = _levelData.MovesCount;
-        _targetDotDatas = _levelData.TargetDotDatas;
+        _targetDotDatas = new TargetDotData[_levelData.TargetDotDatas.Length];
+
+        for (int i = 0; i < _levelData.TargetDotDatas.Length; i++)
+        {
+            _targetDotDatas[i] = new TargetDotData();
+            _targetDotDatas[i].DotData = _levelData.TargetDotDatas[i].DotData;
+            _targetDotDatas[i].Count = _levelData.TargetDotDatas[i].Count;
+        }
 
         MovesCountChanged?.Invoke(_movesCount);
 
@@ -57,6 +65,19 @@ public class GameplayManager : MonoBehaviour
         _movesCount--;
 
         MovesCountChanged?.Invoke(_movesCount);
+
+        foreach (Dot dot in dots)
+        {
+            foreach (TargetDotData targetDotData in _targetDotDatas)
+            {
+                if (dot.Data == targetDotData.DotData)
+                {
+                    targetDotData.ReduceCount();
+                }
+            }
+        }
+
+        _ui.UpdateTargetDotViews(_targetDotDatas);
 
         if (_movesCount <= 0)
         {

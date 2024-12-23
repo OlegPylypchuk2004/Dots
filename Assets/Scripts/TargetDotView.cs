@@ -14,11 +14,17 @@ public class TargetDotView : MonoBehaviour
         _previewImage.color = targetColor;
         _targetCount = targetCount;
 
-        UpdateView(0);
+        _countTextMesh.text = $"{0}/{_targetCount}";
     }
 
     public void UpdateView(int currentCount)
     {
+        if (currentCount < 0)
+        {
+            currentCount = 0;
+        }
+
+        currentCount = _targetCount - currentCount;
         _countTextMesh.text = $"{currentCount}/{_targetCount}";
     }
 }
