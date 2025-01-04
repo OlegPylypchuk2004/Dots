@@ -11,11 +11,13 @@ public class Field : MonoBehaviour
 
     private DotData[] _dotDatas;
     private List<Point> _points;
+    private List<Dot> _allDots;
 
     private void Awake()
     {
         _points = new List<Point>();
         _dotDatas = Resources.LoadAll<DotData>("Data/Dots");
+        _allDots = new List<Dot>();
     }
 
     private void OnEnable()
@@ -26,6 +28,14 @@ public class Field : MonoBehaviour
     private void OnDisable()
     {
         _connector.DotsConnected -= OnDotsConnected;
+    }
+
+    public Dot[] AllDots
+    {
+        get
+        {
+            return _allDots.ToArray();
+        }
     }
 
     public void Generate(GridData gridData)
@@ -67,7 +77,10 @@ public class Field : MonoBehaviour
 
     private Dot SpawnDot()
     {
-        return Instantiate(_dotPrefab);
+        Dot dot = Instantiate(_dotPrefab);
+        _allDots.Add(dot);
+
+        return dot;
     }
 
     private void OnDotsConnected(Dot[] dots)
@@ -78,6 +91,7 @@ public class Field : MonoBehaviour
         {
             points.Add(dot.Point);
             Destroy(dot.gameObject);
+            _allDots.Remove(dot);
         }
 
         foreach (Point point in points)

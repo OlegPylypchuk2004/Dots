@@ -3194,6 +3194,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   _lineRenderer: {fileID: 1801191449}
+  _field: {fileID: 1145893338}
 --- !u!120 &1801191449
 LineRenderer:
   serializedVersion: 2

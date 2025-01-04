@@ -6,10 +6,12 @@ using UnityEngine.EventSystems;
 public class DotsConnector : MonoBehaviour
 {
     [SerializeField] private Camera _camera;
+    [SerializeField] private Field _field;
     [SerializeField] private LayerMask _dotLayerMask;
     [SerializeField] private LineRenderer _lineRenderer;
 
     private List<Dot> _selectedDots;
+    private List<Dot> _extraSelectedDots;
     private bool _isActivated;
 
     public event Action<Dot[]> DotsConnected;
@@ -17,6 +19,7 @@ public class DotsConnector : MonoBehaviour
     private void Awake()
     {
         _selectedDots = new List<Dot>();
+        _extraSelectedDots = new List<Dot>();
     }
 
     private void Update()
@@ -47,6 +50,31 @@ public class DotsConnector : MonoBehaviour
                             _selectedDots.RemoveAt(_selectedDots.Count - 1);
 
                             UpdateLine();
+
+                            foreach (Dot extraSelectedDot in _extraSelectedDots)
+                            {
+                                extraSelectedDot.Deselect();
+                            }
+
+                            _extraSelectedDots.Clear();
+                        }
+                        else
+                        {
+                            if (_selectedDots.Contains(dot))
+                            {
+                                Dot[] allDots = _field.AllDots;
+
+                                for (int i = 0; i < allDots.Length; i++)
+                                {
+                                    if (allDots[i].Data == _selectedDots[0].Data && !_selectedDots.Contains(allDots[i]))
+                                    {
+                                        _extraSelectedDots.Add(allDots[i]);
+                                        allDots[i].Select();
+                                    }
+                                }
+                            }
+
+                            Select(dot);
                         }
                     }
                     else
@@ -60,6 +88,12 @@ public class DotsConnector : MonoBehaviour
         {
             if (_selectedDots.Count >= 2)
             {
+                foreach (Dot extraSelectedDot in _extraSelectedDots)
+                {
+                    extraSelectedDot.Deselect();
+                    _selectedDots.Add(extraSelectedDot);
+                }
+
                 DotsConnected?.Invoke(_selectedDots.ToArray());
             }
 
@@ -69,6 +103,7 @@ public class DotsConnector : MonoBehaviour
             }
 
             _selectedDots.Clear();
+            _extraSelectedDots.Clear();
             _lineRenderer.positionCount = 0;
         }
     }
@@ -86,7 +121,7 @@ public class DotsConnector : MonoBehaviour
     private bool IsTouchOverUI()
     {
         EventSystem eventSystem = EventSystem.current;
-        
+
         if (eventSystem == null)
         {
             return false;
