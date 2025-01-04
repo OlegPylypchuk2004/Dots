@@ -85,7 +85,14 @@ public class DotsConnector : MonoBehaviour
 
     private bool IsTouchOverUI()
     {
-        if (Input.GetMouseButton(0) && EventSystem.current.IsPointerOverGameObject())
+        EventSystem eventSystem = EventSystem.current;
+        
+        if (eventSystem == null)
+        {
+            return false;
+        }
+
+        if (Input.GetMouseButton(0) && eventSystem.IsPointerOverGameObject())
         {
             return true;
         }
@@ -94,7 +101,7 @@ public class DotsConnector : MonoBehaviour
         {
             foreach (Touch touch in Input.touches)
             {
-                if (EventSystem.current.IsPointerOverGameObject(touch.fingerId))
+                if (eventSystem.IsPointerOverGameObject(touch.fingerId))
                 {
                     return true;
                 }
