@@ -3,5 +3,5 @@ using System;
 [Serializable]
 public class PlayerData
 {
-    public int OpenedLevelsCount;
+    public int OpenedLevelsCount = 1;
 }

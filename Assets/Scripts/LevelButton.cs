@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class LevelButton : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _numberText;
+    [SerializeField] private Image _lockIcon;
     [SerializeField] private GameObject _line;
     [SerializeField] private Button _button;
 
@@ -24,11 +25,23 @@ public class LevelButton : MonoBehaviour
         _button.onClick.RemoveListener(OnButtonClicked);
     }
 
-    public void Initialize(int levelNumber, bool isLastLevel = false)
+    public void Initialize(int levelNumber, bool isOpened, bool isLastLevel = false)
     {
         _levelNumber = levelNumber;
-
         _numberText.text = levelNumber.ToString();
+
+        if (isOpened)
+        {
+            _numberText.gameObject.SetActive(true);
+            _lockIcon.gameObject.SetActive(false);
+        }
+        else
+        {
+            _numberText.gameObject.SetActive(false);
+            _lockIcon.gameObject.SetActive(true);
+        }
+
+        _button.interactable = isOpened;
         _line.SetActive(!isLastLevel);
 
         _isInitialized = true;
